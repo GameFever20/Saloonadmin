@@ -10,6 +10,7 @@ public class FireBaseHandlerClass   {
 
 
     public FireBaseHandlerClass() {
+        //hello
     }
 
     public void uploadOrders(){
