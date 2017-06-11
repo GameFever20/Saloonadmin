@@ -6,5 +6,8 @@ package utils;
 
 public class Order {
 
+String saloonID ;
+    String userID;
+    String serviceID;
 
 }
