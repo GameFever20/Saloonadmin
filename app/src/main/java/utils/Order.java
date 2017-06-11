@@ -9,7 +9,7 @@ public class Order {
     String saloonID;
     String userID;
     String serviceID;
-    String orderStatus;
+    int orderStatus;
     String saloonName;
     long orderTime = 0;
 
@@ -41,11 +41,11 @@ public class Order {
         this.serviceID = serviceID;
     }
 
-    public String getOrderStatus() {
+    public int getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(String orderStatus) {
+    public void setOrderStatus(int orderStatus) {
         this.orderStatus = orderStatus;
     }
 

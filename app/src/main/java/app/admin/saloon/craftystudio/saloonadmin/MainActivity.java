@@ -12,9 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import utils.FireBaseHandler;
+import utils.Order;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    FireBaseHandler fireBaseHandler;
+    Order order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,38 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        // instantiating firebasehandler class
+        fireBaseHandler=new FireBaseHandler();
+
+        //instantiating order class
+        order=new Order();
+
+        order.setSaloonID("priyank");
+        order.setSaloonName("Get A Look");
+        order.setOrderStatus(1);
+        order.setOrderTime(5);
+        order.setServiceID("Hair Cut");
+        order.setUserID("Vaishali");
+        fireBaseHandler.uploadOrder(order);
+
+
+        //calling download orderlist
+        fireBaseHandler.downloadOrderList(1, 1, new FireBaseHandler.OnOrderListListner() {
+            @Override
+            public void onOrderList(ArrayList<Order> ordersArrayList) {
+                Toast.makeText(MainActivity.this, "Order is "+ordersArrayList.get(0).getSaloonName(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(MainActivity.this, "Can't reach ", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
     }
 
     @Override

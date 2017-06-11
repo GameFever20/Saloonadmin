@@ -33,7 +33,7 @@ public class FireBaseHandler {
     public void uploadOrder(Order order) {
         mDatabaseRef = mFirebaseDatabase.getReference("Orders");
 
-        mDatabaseRef.setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mDatabaseRef.push().setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Log.d("On upload", "upload completed");
@@ -55,11 +55,11 @@ public class FireBaseHandler {
 
     }
 
-    public void downloadOrderList(int limit, int orderStatus) {
+    public void downloadOrderList(int limit, int orderStatus,final OnOrderListListner onOrderListListner) {
 
         DatabaseReference myRef = mFirebaseDatabase.getReference().child("Orders");
 
-        Query myref2 = myRef.orderByChild("orderStatus").equalTo(orderStatus).limitToFirst(limit);
+        Query myref2 = myRef.orderByChild("orderStatus").equalTo(orderStatus).limitToLast(limit);
 
         myref2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -70,23 +70,27 @@ public class FireBaseHandler {
                     Order order = snapshot.getValue(Order.class);
                     ordersArrayList.add(order);
                 }
+                onOrderListListner.onOrderList(ordersArrayList);
 
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                onOrderListListner.onCancel();
             }
         });
 
 
     }
 
-    public interface DataBaseHandlerOrderListListner {
+
+    // Interface creation
+
+    public interface OnOrderListListner {
 
         public void onOrderList(ArrayList<Order> ordersArrayList);
 
-
+        public void onCancel();
     }
 }
