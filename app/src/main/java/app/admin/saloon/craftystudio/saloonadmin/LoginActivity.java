@@ -57,7 +57,18 @@ public class LoginActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        //On click of sign in button
+        mSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn(mEmailEditText.getText().toString().trim(),mPasswordEditText.getText().toString().trim());
+            }
+        });
+
     }
+
 
     private void signIn(String email, String password) {
         Log.d("In sign in ", "signIn:" + email);
