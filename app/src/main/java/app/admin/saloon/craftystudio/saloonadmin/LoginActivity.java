@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import static app.admin.saloon.craftystudio.saloonadmin.R.styleable.Toolbar;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override
