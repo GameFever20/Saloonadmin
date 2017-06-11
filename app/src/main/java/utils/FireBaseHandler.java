@@ -10,19 +10,19 @@ public class FireBaseHandler {
         //hello he
     }
 
-    public void uploadOrders(){
+    public void uploadOrder(){
 
     }
 
-    public void downloadOrders(){
+    public void downloadOrder(){
 
     }
 
-    public void uploadOrdersList(){
+    public void uploadOrderList(){
 
     }
 
-    public void downloadOrdersList(){
+    public void downloadOrderList(){
 
     }
 }
