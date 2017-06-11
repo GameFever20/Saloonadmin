@@ -1,6 +1,7 @@
 package app.admin.saloon.craftystudio.saloonadmin;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -67,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //progress dialog
+        progressDialog = new ProgressDialog(this);
+
     }
 
 
@@ -105,18 +109,20 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signOut() {
         mAuth.signOut();
-        // updateUI(null);
+       // updateUI(null);
     }
 
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
+            Intent intent=new Intent(this,MainActivity.class);
+            startActivity(intent);
         } else {
+            Toast.makeText(this, "Email id or password is incorrect", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void showProgressDialog() {
-        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Signing in..");
         progressDialog.show();
     }

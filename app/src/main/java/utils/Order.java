@@ -6,12 +6,12 @@ package utils;
 
 public class Order {
 
-String saloonID ;
+    String saloonID;
     String userID;
     String serviceID;
-String orderStatus;
-    String saloonName ;
-    long orderTime = 0 ;
+    String orderStatus;
+    String saloonName;
+    long orderTime = 0;
 
     public Order() {
     }
