@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity
 
         // downloadingOrderList();
 
+        FirebaseMessaging.getInstance().subscribeToTopic("admin");
+
     }
 
     private void downloadingOrderList() {

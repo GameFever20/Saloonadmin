@@ -46,7 +46,7 @@ public class OrderListActivity extends AppCompatActivity {
 
     Saloon saloon;
 
-    static String SaloonUID;
+     String saloonUID;
 
 
     @Override
@@ -61,7 +61,12 @@ public class OrderListActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         saloon = (Saloon) bundle.getSerializable("Saloon Class");
-        SaloonUID = saloon.getSaloonUID();
+        if (saloon == null) {
+            saloonUID =getIntent().getStringExtra("saloonUID");
+            saloon =new Saloon();
+            saloon.setSaloonUID(saloonUID);
+        }
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -100,7 +105,7 @@ public class OrderListActivity extends AppCompatActivity {
         //downloading Recent  OrderList from firebase
 
         //calling download orderlist
-        fireBaseHandler.downloadOrderList(SaloonUID, 30, new FireBaseHandler.OnOrderListListner() {
+        fireBaseHandler.downloadOrderList(saloon.getSaloonUID(), 30, new FireBaseHandler.OnOrderListListner() {
 
             @Override
             public void onOrderList(ArrayList<Order> ordersArrayList) {
@@ -176,7 +181,7 @@ public class OrderListActivity extends AppCompatActivity {
 
     private void saloonMoreOrderFetch() {
         FireBaseHandler fireBaseHandler = new FireBaseHandler();
-        fireBaseHandler.downloadOrderList(SaloonUID, 30
+        fireBaseHandler.downloadOrderList(saloon.getSaloonUID(), 30
                 , mOrderArraylist.get(mOrderArraylist.size() - 1).getOrderID()
                 , new FireBaseHandler.OnOrderListListner() {
                     @Override
@@ -226,6 +231,20 @@ public class OrderListActivity extends AppCompatActivity {
 
         progressDialog.cancel();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if (saloonUID ==null) {
+            super.onBackPressed();
+        }else{
+            Intent intent =new Intent(OrderListActivity.this ,MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

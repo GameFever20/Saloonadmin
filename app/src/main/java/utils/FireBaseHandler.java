@@ -47,11 +47,11 @@ public class FireBaseHandler {
         });
     }
 
-    public void downloadOrder(String orderUID, final OnOrderDownload onOrderDownload) {
-        mDatabaseRef = mFirebaseDatabase.getReference().child("Orders/" + orderUID);
+    public void downloadOrder(String saloonUID ,String orderUID ,final OnOrderDownload onOrderDownload) {
+        DatabaseReference myRef = mFirebaseDatabase.getReference().child("Orders/" + saloonUID+"/"+orderUID);
 
 
-        mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

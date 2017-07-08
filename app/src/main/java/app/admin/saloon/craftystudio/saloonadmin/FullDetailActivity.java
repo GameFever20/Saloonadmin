@@ -8,14 +8,18 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import utils.FireBaseHandler;
 import utils.Order;
 
 public class FullDetailActivity extends AppCompatActivity {
@@ -36,7 +40,7 @@ public class FullDetailActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     //All id's
-    public static String SaloonID, UserID, OrderID, ServiceID = "";
+    public  String saloonUID, orderID;
 
     //Imageview for showcasig saloon's image
     ImageView imageView;
@@ -56,15 +60,49 @@ public class FullDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        SaloonID = bundle.getString("SaloonID");
-        //SaloonID="Ls2gH9SRK6byokD4pBxINVbu76n2";
-        UserID = bundle.getString("UserID");
-        OrderID = bundle.getString("OrderID");
-        ServiceID = bundle.getString("ServiceID");
+
+        ORDER =null;
 
         ORDER = (Order) bundle.getSerializable("Order_Class");
 
+        if (ORDER == null){
 
+            saloonUID = getIntent().getStringExtra("SaloonUID");
+            orderID = getIntent().getStringExtra("OrderID");
+
+
+            new FireBaseHandler().downloadOrder(saloonUID, orderID, new FireBaseHandler.OnOrderDownload() {
+                @Override
+                public void onOrder(Order order) {
+                    if (order !=null){
+                        ORDER=order;
+                        initializeActivity();
+                    }else{
+                        Toast.makeText(FullDetailActivity.this, "No order found", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        }else
+        {
+            initializeActivity();
+        }
+
+
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+    }
+
+    private void initializeActivity() {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -82,15 +120,20 @@ public class FullDetailActivity extends AppCompatActivity {
         //change when saloon's image is ready
         // imageView.setImageResource(R.drawable.parlourimageshowcase);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    }
 
+
+    @Override
+    public void onBackPressed() {
+        if (orderID ==null) {
+            super.onBackPressed();
+        }else{
+            Intent intent =new Intent(FullDetailActivity.this ,OrderListActivity.class);
+            intent.putExtra("saloonUID" ,saloonUID);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
     }
 
 
