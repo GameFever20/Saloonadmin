@@ -4,18 +4,33 @@ package utils;
  * Created by Aisha on 6/23/2017.
  */
 
-public class Service {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 
 
-    String serviceUID;
+public class Service implements Serializable,Parcelable {
+
+    String saloonName ;
+    String serviceUID ;
+    String saloonUID ;
+
+    String serviceName ;//input
+    String serviceDuration ;
+    String serviceDescription ;
+    String serviceTypeName ;
+    String serviceSubTypeName;
+
     int servicePrice;
-    String serviceName;//input
-    String serviceDuration;
-    String serviceDescription;
-    String saloonUID;
-    String saloonName;
-    int serviceType;
-    String serviceTypeName;
+    int serviceOfferPrice;
+    int serviceType ;
+    int serviceSubType;
+
+    boolean selected;
+
+
+
 
     public Service() {
     }
@@ -91,5 +106,101 @@ public class Service {
     public void setServiceTypeName(String serviceTypeName) {
         this.serviceTypeName = serviceTypeName;
     }
-}
 
+    public int getServiceOfferPrice() {
+        return serviceOfferPrice;
+    }
+
+    public void setServiceOfferPrice(int serviceOfferPrice) {
+        this.serviceOfferPrice = serviceOfferPrice;
+    }
+
+
+    public String getServiceSubTypeName() {
+        return serviceSubTypeName;
+    }
+
+    public void setServiceSubTypeName(String serviceSubTypeName) {
+        this.serviceSubTypeName = serviceSubTypeName;
+    }
+
+    public int getServiceSubType() {
+        return serviceSubType;
+    }
+
+    public void setServiceSubType(int serviceSubType) {
+        this.serviceSubType = serviceSubType;
+    }
+
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    //parcel start
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(serviceName);
+        dest.writeString(serviceUID);
+        dest.writeString(saloonUID);
+        dest.writeString(saloonName);
+        dest.writeString(serviceTypeName);
+
+        dest.writeInt(servicePrice);
+        dest.writeInt(serviceOfferPrice);
+        dest.writeInt(serviceType);
+
+
+
+
+
+
+
+
+    }
+
+    public Service(Parcel source) {
+        serviceName = source.readString();
+        serviceUID = source.readString();
+        saloonUID = source.readString();
+        saloonName = source.readString();
+        serviceTypeName = source.readString();
+
+        servicePrice = source.readInt();
+        serviceOfferPrice =source.readInt();
+        serviceType = source.readInt();
+
+
+
+    }
+    public static final Creator<Service> CREATOR = new Creator<Service>() {
+        @Override
+        public Service[] newArray(int size) {
+            return new Service[size];
+        }
+
+        @Override
+        public Service createFromParcel(Parcel source) {
+            return new Service(source);
+        }
+    };
+
+    public static Creator<Service> getCREATOR() {
+        return CREATOR;
+    }
+
+    //parcel imp over
+
+
+
+}
