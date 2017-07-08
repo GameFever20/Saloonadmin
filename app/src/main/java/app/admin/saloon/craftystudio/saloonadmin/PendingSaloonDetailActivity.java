@@ -82,140 +82,33 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
         }
 
         saloon = (Saloon) bundle.getSerializable("Saloon Class");
-        SaloonUID = saloon.getSaloonUID();
 
 
         if (saloon != null) {
+            SaloonUID = saloon.getSaloonUID();
 
-            //check am or pm
-            checkAMorPM();
+            initializeActivity();
 
-            mPendingSaloonName.setText(saloon.getSaloonName());
-            mPendingSaloonPhoneNumber.setText(saloon.getSaloonPhoneNumber());
-            mPendingSaloonAddress.setText(saloon.getSaloonAddress());
-            mPendingSaloonOpenandCloseTime.setText("Opening Time : " + saloon.getOpeningTimeHour() + ":" + saloon.getOpeningTimeMinute() + o + "\n" + "Closing Time  : " + saloon.getClosingTimeHour() + ":" + saloon.getClosingTimeMinute() + c);
+        }else{
+            SaloonUID = getIntent().getStringExtra("SaloonUID");
 
+            new FireBaseHandler().downloadSaloon(SaloonUID, new FireBaseHandler.OnSaloonDownload() {
+                @Override
+                public void onSaloon(Saloon saloon) {
+                    if (saloon!= null){
 
-            if (saloon.getSaloonImageList() != null) {
-
-                //firebase storage connection
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference();
-                StorageReference storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "profile_image");
-
-
-                //Display Profile image
-
-                if (saloon.getSaloonImageList().containsKey("profile_image")) {
-
-                    Glide.with(this)
-                            .using(new FirebaseImageLoader())
-                            .load(storageReference)
-                            .thumbnail(0.5f)
-                            .override(900, 400)
-                            .crossFade(100)
-                            .fitCenter()
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(mPendingSaloonProfile);
+                        PendingSaloonDetailActivity.this.saloon =saloon ;
+                        initializeActivity();
+                    }else{
+                        Toast.makeText(PendingSaloonDetailActivity.this, "Saloon not found", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
-                //Display 1 showcase image
+                @Override
+                public void onSaloonValueUploaded(boolean isSucessful) {
 
-                storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_1");
-
-                if (saloon.getSaloonImageList().containsKey("image_1")) {
-
-                    Glide.with(this)
-                            .using(new FirebaseImageLoader())
-                            .load(storageReference)
-                            .thumbnail(0.5f)
-                            .override(900, 400)
-                            .crossFade(100)
-                            .fitCenter()
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(mPendingSaloonShowcase1);
                 }
-
-                //Display 2 showcase image
-
-                storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_2");
-
-                if (saloon.getSaloonImageList().containsKey("image_2")) {
-
-                    Glide.with(this)
-                            .using(new FirebaseImageLoader())
-                            .load(storageReference)
-                            .thumbnail(0.5f)
-                            .override(900, 400)
-                            .crossFade(100)
-                            .fitCenter()
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(mPendingSaloonShowcase2);
-                }
-
-                //Display 3 showcase image
-
-                storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_3");
-
-                if (saloon.getSaloonImageList().containsKey("image_3")) {
-
-                    Glide.with(this)
-                            .using(new FirebaseImageLoader())
-                            .load(storageReference)
-                            .thumbnail(0.5f)
-                            .override(900, 400)
-                            .crossFade(100)
-                            .fitCenter()
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(mPendingSaloonShowcase3);
-                }
-
-                //Display 4 showcase image
-
-                storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_4");
-
-                if (saloon.getSaloonImageList().containsKey("image_4")) {
-
-                    Glide.with(this)
-                            .using(new FirebaseImageLoader())
-                            .load(storageReference)
-                            .thumbnail(0.5f)
-                            .override(900, 400)
-                            .crossFade(100)
-                            .fitCenter()
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(mPendingSaloonShowcase4);
-                }
-
-
-                //Display 5 showcase image
-                storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_5");
-
-                if (saloon.getSaloonImageList().containsKey("image_5")) {
-
-                    Glide.with(this)
-                            .using(new FirebaseImageLoader())
-                            .load(storageReference)
-                            .thumbnail(0.5f)
-                            .override(900, 400)
-                            .crossFade(100)
-                            .fitCenter()
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(mPendingSaloonShowcase5);
-                }
-
-
-            }
-
-
-            // resolveRatingwithStar(saloon.getSaloonRating());
-
+            });
         }
 
         //intializing firebase
@@ -224,6 +117,138 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
         //getting random no
         random = new Random();
 
+
+    }
+
+    private void initializeActivity() {
+        //check am or pm
+        checkAMorPM();
+
+        mPendingSaloonName.setText(saloon.getSaloonName());
+        mPendingSaloonPhoneNumber.setText(saloon.getSaloonPhoneNumber());
+        mPendingSaloonAddress.setText(saloon.getSaloonAddress());
+        mPendingSaloonOpenandCloseTime.setText("Opening Time : " + saloon.getOpeningTimeHour() + ":" + saloon.getOpeningTimeMinute() + o + "\n" + "Closing Time  : " + saloon.getClosingTimeHour() + ":" + saloon.getClosingTimeMinute() + c);
+
+
+        if (saloon.getSaloonImageList() != null) {
+
+            //firebase storage connection
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference();
+            StorageReference storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "profile_image");
+
+
+            //Display Profile image
+
+            if (saloon.getSaloonImageList().containsKey("profile_image")) {
+
+                Glide.with(this)
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .thumbnail(0.5f)
+                        .override(900, 400)
+                        .crossFade(100)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(mPendingSaloonProfile);
+            }
+
+            //Display 1 showcase image
+
+            storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_1");
+
+            if (saloon.getSaloonImageList().containsKey("image_1")) {
+
+                Glide.with(this)
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .thumbnail(0.5f)
+                        .override(900, 400)
+                        .crossFade(100)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(mPendingSaloonShowcase1);
+            }
+
+            //Display 2 showcase image
+
+            storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_2");
+
+            if (saloon.getSaloonImageList().containsKey("image_2")) {
+
+                Glide.with(this)
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .thumbnail(0.5f)
+                        .override(900, 400)
+                        .crossFade(100)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(mPendingSaloonShowcase2);
+            }
+
+            //Display 3 showcase image
+
+            storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_3");
+
+            if (saloon.getSaloonImageList().containsKey("image_3")) {
+
+                Glide.with(this)
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .thumbnail(0.5f)
+                        .override(900, 400)
+                        .crossFade(100)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(mPendingSaloonShowcase3);
+            }
+
+            //Display 4 showcase image
+
+            storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_4");
+
+            if (saloon.getSaloonImageList().containsKey("image_4")) {
+
+                Glide.with(this)
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .thumbnail(0.5f)
+                        .override(900, 400)
+                        .crossFade(100)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(mPendingSaloonShowcase4);
+            }
+
+
+            //Display 5 showcase image
+            storageReference = storageRef.child("saloon_image/" + SaloonUID + "/" + "image_5");
+
+            if (saloon.getSaloonImageList().containsKey("image_5")) {
+
+                Glide.with(this)
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .thumbnail(0.5f)
+                        .override(900, 400)
+                        .crossFade(100)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(mPendingSaloonShowcase5);
+            }
+
+
+        }
+
+
+        // resolveRatingwithStar(saloon.getSaloonRating());
 
     }
 

@@ -12,6 +12,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import app.admin.saloon.craftystudio.saloonadmin.FullDetailActivity;
+import app.admin.saloon.craftystudio.saloonadmin.PendingSaloonDetailActivity;
 import app.admin.saloon.craftystudio.saloonadmin.R;
 
 
@@ -23,22 +24,38 @@ public class FireBasePushNotificationService extends FirebaseMessagingService {
     String saloonUID, orderID;
 
     Intent intent;
+    int notificationType ;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            saloonUID = remoteMessage.getData().get("saloon");
-            orderID = remoteMessage.getData().get("order");
+
+
+            notificationType =Integer.valueOf(remoteMessage.getData().get("type"));
+
+            if (notificationType == 1) {
+                saloonUID = remoteMessage.getData().get("saloon");
+
+                intent = new Intent(this, PendingSaloonDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                intent.putExtra("SaloonUID" ,saloonUID );
+
+            }else if (notificationType == 2){
+                saloonUID = remoteMessage.getData().get("saloon");
+                orderID = remoteMessage.getData().get("order");
+
+                intent = new Intent(this, FullDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                intent.putExtra("SaloonUID" ,saloonUID );
+                intent.putExtra("OrderID" , orderID);
+            }
 
 
 
 
-            intent = new Intent(this, FullDetailActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            intent.putExtra("SaloonUID" ,saloonUID );
-            intent.putExtra("OrderID" , orderID);
 
 
             showNotification(remoteMessage.getData().get("notificationT"), remoteMessage.getData().get("notificationB"));
@@ -62,7 +79,7 @@ public class FireBasePushNotificationService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle( title)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText("have got an order")
+                .setContentText(author)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
