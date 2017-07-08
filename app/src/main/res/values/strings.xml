@@ -1,9 +1,16 @@
 <resources>
-    <string name="app_name">Saloon admin</string>
+    <string name="app_name">Saloon</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Get A Look Admin</string>
+    <string name="title_activity_add_saloon">Add Saloon</string>
+    <string name="title_activity_full_detail">Order Detail</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_order_list">Orders</string>
+    <string name="title_activity_pending_saloon">New Saloon Request</string>
+    <string name="title_activity_service_list">Service</string>
+    <string name="title_activity_hire_photographer">Hire Photographer Request</string>
 </resources>

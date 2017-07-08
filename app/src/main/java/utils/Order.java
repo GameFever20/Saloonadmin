@@ -1,17 +1,36 @@
 package utils;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by bunny on 11/06/17.
  */
 
-public class Order {
+public class Order implements Serializable {
 
-String saloonID ;
-    String userID;
-    String serviceID;
-String orderStatus;
-    String saloonName ;
-    long orderTime = 0 ;
+
+    private String saloonID ;
+    private String userID;
+    private String orderID;
+    private String serviceID;
+    private int orderStatus;
+    private String saloonName ;
+    private long orderTime = 0 ;
+    private int orderPrice =0 ;
+    private String orderServiceName ="" ;
+
+
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+
 
     public Order() {
     }
@@ -41,11 +60,11 @@ String orderStatus;
         this.serviceID = serviceID;
     }
 
-    public String getOrderStatus() {
+    public int getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(String orderStatus) {
+    public void setOrderStatus(int orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -63,5 +82,43 @@ String orderStatus;
 
     public void setOrderTime(long orderTime) {
         this.orderTime = orderTime;
+    }
+
+    public int getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(int orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public String getOrderServiceName() {
+        return orderServiceName;
+    }
+
+    public void setOrderServiceName(String orderServiceName) {
+        this.orderServiceName = orderServiceName;
+    }
+
+    public String resolveOrderStatus() {
+        if (orderStatus == 1){
+            return "Placed";
+        } else if (orderStatus ==2) {
+            return "Pending";
+        }else if(orderStatus == 3){
+            return "completed";
+        }else{
+            return "";
+        }
+    }
+
+    public String resolveOrderDate() {
+        String dateFormat = "dd/MM/yyyy  hh:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+
+        Date date = new Date();
+        date.setTime(orderTime);
+        return simpleDateFormat.format(date);
+
     }
 }
