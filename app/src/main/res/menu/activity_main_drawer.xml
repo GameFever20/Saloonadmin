@@ -41,4 +41,15 @@
         </menu>
     </item>
 
+    <item android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/nav_"
+                android:actionProviderClass="android.widget.ShareActionProvider"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+
+        </menu>
+    </item>
+
 </menu>

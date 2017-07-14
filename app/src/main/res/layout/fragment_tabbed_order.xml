@@ -38,6 +38,19 @@
             android:textStyle="italic"
             android:typeface="sans" />
 
+        <TextView
+            android:id="@+id/fragment_order_bookingTime_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif"
+            android:text="Order Booking Time :"
+            android:textSize="18dp"
+            android:textStyle="italic"
+            android:typeface="sans" />
+
+
+
 
 
     </LinearLayout>

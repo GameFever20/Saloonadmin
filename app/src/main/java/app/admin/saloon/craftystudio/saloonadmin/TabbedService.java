@@ -26,7 +26,7 @@ public class TabbedService extends Fragment {
         mfragmentServicePrice = (TextView) tempView.findViewById(R.id.fragment_service_price_textview);
 
 
-        mfragmentServiceName.setText(mfragmentServiceName.getText().toString() + "  " + FullDetailActivity.ORDER.getOrderServiceName());
+        mfragmentServiceName.setText(mfragmentServiceName.getText().toString() + "  " + FullDetailActivity.ORDER.resolveOrderServiceList());
         mfragmentServicePrice.setText(mfragmentServicePrice.getText().toString() + "  " + FullDetailActivity.ORDER.getOrderPrice());
 
 

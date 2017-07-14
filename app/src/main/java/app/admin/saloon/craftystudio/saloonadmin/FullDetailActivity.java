@@ -61,9 +61,7 @@ public class FullDetailActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
 
-        ORDER =null;
 
-        ORDER = (Order) bundle.getSerializable("Order_Class");
 
         if (ORDER == null){
 

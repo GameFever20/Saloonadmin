@@ -156,6 +156,8 @@ public class OrderListActivity extends AppCompatActivity {
                         bundle.putString("UserID", order.getUserID());
                         bundle.putString("ServiceID", order.getServiceID());
 
+                        FullDetailActivity.ORDER = order;
+
                         Intent intent = new Intent(OrderListActivity.this, FullDetailActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);

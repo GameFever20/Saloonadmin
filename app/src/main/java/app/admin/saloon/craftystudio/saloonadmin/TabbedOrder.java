@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class TabbedOrder extends Fragment {
 
-    TextView mfragmentOrderStatus, mfragmentOrderTime;
+    TextView mfragmentOrderStatus, mfragmentOrderTime, mfragmentOrderBookingTime;
 
     @Nullable
     @Override
@@ -24,10 +24,12 @@ public class TabbedOrder extends Fragment {
 
         mfragmentOrderStatus = (TextView) tempView.findViewById(R.id.fragment_order_status_textview);
         mfragmentOrderTime = (TextView) tempView.findViewById(R.id.fragment_order_time_textview);
+        mfragmentOrderBookingTime = (TextView) tempView.findViewById(R.id.fragment_order_bookingTime_textview);
 
 
         mfragmentOrderStatus.setText(mfragmentOrderStatus.getText().toString() + "  " + FullDetailActivity.ORDER.resolveOrderStatus());
         mfragmentOrderTime.setText(mfragmentOrderTime.getText().toString() + "  " + FullDetailActivity.ORDER.resolveOrderDate());
+        mfragmentOrderBookingTime.setText(mfragmentOrderBookingTime.getText().toString() + "  " + FullDetailActivity.ORDER.resolveOrderBookingTime());
 
 
         return tempView;

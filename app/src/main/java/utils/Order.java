@@ -15,20 +15,23 @@ import java.util.Map;
 
 public class Order implements Serializable ,Parcelable {
 
-    private String saloonID ;
+
+    private String saloonID;
     private String userID;
     private String serviceID;
     private String orderID;
     private int orderStatus;
-    private String saloonName ;
-    private long orderTime = 0 ;
-    private int orderPrice =0 ;
-    private String orderServiceName ="" ;
-    private Map<String,String> orderServiceIDList =new HashMap<String, String>();
+    private String saloonName;
+    private long orderTime = 0;
+    private int orderPrice = 0;
+    private String orderServiceName = "";
+    private Map<String, Service> orderServiceIDList = new HashMap<String, Service>();
     private int orderTotalServiceCount;
 
-    private long orderBookingTime ;
+    private long orderBookingTime;
 
+    private String userPhoneNumber;
+    private String userName;
 
 
     public Order() {
@@ -107,11 +110,11 @@ public class Order implements Serializable ,Parcelable {
         this.orderServiceName = orderServiceName;
     }
 
-    public Map<String, String> getOrderServiceIDList() {
+    public Map<String, Service> getOrderServiceIDList() {
         return orderServiceIDList;
     }
 
-    public void setOrderServiceIDList(Map<String, String> orderServiceIDList) {
+    public void setOrderServiceIDList(Map<String, Service> orderServiceIDList) {
         this.orderServiceIDList = orderServiceIDList;
     }
 
@@ -131,16 +134,32 @@ public class Order implements Serializable ,Parcelable {
         this.orderBookingTime = orderBookingTime;
     }
 
+    public String getUserPhoneNumber() {
+        return userPhoneNumber;
+    }
+
+    public void setUserPhoneNumber(String userPhoneNumber) {
+        this.userPhoneNumber = userPhoneNumber;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String resolveOrderStatus() {
-        if (orderStatus == 1){
+        if (orderStatus == 1) {
             return "Placed";
-        } else if (orderStatus ==2) {
+        } else if (orderStatus == 2) {
             return "Accepted";
-        }else if(orderStatus == 3){
+        } else if (orderStatus == 3) {
             return "completed";
-        }else if(orderStatus==-1){
+        } else if (orderStatus == -1) {
             return "Cancel";
-        } else{
+        } else {
             return "";
         }
     }
@@ -155,12 +174,12 @@ public class Order implements Serializable ,Parcelable {
 
     }
 
-    public String resolveOrderServiceList(){
+    public String resolveOrderServiceList() {
 
-        String serviceList ="";
+        String serviceList = "";
 
-        for (String string : getOrderServiceIDList().values()){
-            serviceList =serviceList+"* "+string+"\n";
+        for (Service service : getOrderServiceIDList().values()) {
+            serviceList = serviceList + "* " + service.getServiceName() + "\n";
 
         }
 
@@ -168,6 +187,22 @@ public class Order implements Serializable ,Parcelable {
 
 
     }
+
+    public String resolveOrderBookingTime(){
+
+
+
+        String dateFormat = "dd/MM/yyyy  hh:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+
+        Date date = new Date();
+        date.setTime(orderBookingTime);
+
+
+
+        return simpleDateFormat.format(date);
+    }
+
 
 
     //parcell implementation
