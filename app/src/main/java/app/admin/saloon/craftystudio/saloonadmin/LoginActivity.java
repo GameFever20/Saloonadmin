@@ -69,10 +69,10 @@ public class LoginActivity extends AppCompatActivity {
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mEmailEditText.getText().toString().isEmpty() && !mPasswordEditText.getText().toString().isEmpty()){
+                if (!mEmailEditText.getText().toString().isEmpty() && !mPasswordEditText.getText().toString().isEmpty()) {
                     signIn(mEmailEditText.getText().toString().trim(), mPasswordEditText.getText().toString().trim());
 
-                }else{
+                } else {
                     Toast.makeText(LoginActivity.this, "Please fill the Entry first", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -159,9 +159,15 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = mEmailEditText.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            mEmailEditText.setError("Required.");
-            valid = false;
+                mEmailEditText.setError("Required.");
+                valid = false;
+
         } else {
+            if (!email.equalsIgnoreCase("ritamgupta.559@gmail.com")) {
+                valid = false;
+                mEmailEditText.setError("Not an Admin");
+                Toast.makeText(this, "Not an admin account", Toast.LENGTH_SHORT).show();
+            }
             mEmailEditText.setError(null);
         }
 
@@ -182,10 +188,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser!=null){
+        if (currentUser != null) {
             updateUI(currentUser);
 
-        }else{
+        } else {
             return;
         }
     }
@@ -201,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            );
+            );
         }
     }
 }

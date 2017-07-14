@@ -35,13 +35,13 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
     LinearLayout mAcceptRejectLinearLayout;
     Saloon saloon;
 
-    public static String SaloonUID;
+    public  String SaloonUID;
 
     int min = 10;
     int max = 60;
 
     Random random;
-    int randomvalue;
+    long randomvalue;
     String o, c;
 
     public FireBaseHandler fireBaseHandler;
@@ -270,6 +270,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
 
     public void pendingSaloonServiceList(View view) {
         Intent intent = new Intent(PendingSaloonDetailActivity.this, ServiceListActivity.class);
+        intent.putExtra("saloonUID", saloon.getSaloonUID());
         startActivity(intent);
     }
 
@@ -286,6 +287,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
     public void acceptPendingSaloon(View view) {
 
         randomvalue = random.nextInt(max - min + 1) + min;
+        randomvalue =randomvalue + (saloon.getSaloonCityIndex()*1000000l);
         Log.d("Random value : ", randomvalue + "");
         Log.d("Saloon UID", SaloonUID + "");
 
@@ -374,6 +376,8 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(PendingSaloonDetailActivity.this, ImageDisplayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("imageName", "profile_image");
+            bundle.putString("saloonUID", saloon.getSaloonUID());
+
             intent.putExtras(bundle);
             startActivity(intent);
 
@@ -389,6 +393,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(PendingSaloonDetailActivity.this, ImageDisplayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("imageName", "image_1");
+            bundle.putString("saloonUID", saloon.getSaloonUID());
             intent.putExtras(bundle);
             startActivity(intent);
 
@@ -404,6 +409,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(PendingSaloonDetailActivity.this, ImageDisplayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("imageName", "image_2");
+            bundle.putString("saloonUID", saloon.getSaloonUID());
             intent.putExtras(bundle);
             startActivity(intent);
 
@@ -418,6 +424,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(PendingSaloonDetailActivity.this, ImageDisplayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("imageName", "image_3");
+            bundle.putString("saloonUID", saloon.getSaloonUID());
             intent.putExtras(bundle);
             startActivity(intent);
 
@@ -432,6 +439,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(PendingSaloonDetailActivity.this, ImageDisplayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("imageName", "image_4");
+            bundle.putString("saloonUID", saloon.getSaloonUID());
             intent.putExtras(bundle);
             startActivity(intent);
 
@@ -446,6 +454,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(PendingSaloonDetailActivity.this, ImageDisplayActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("imageName", "image_5");
+            bundle.putString("saloonUID", saloon.getSaloonUID());
             intent.putExtras(bundle);
             startActivity(intent);
 

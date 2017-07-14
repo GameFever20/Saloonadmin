@@ -32,11 +32,12 @@ public class ImageDisplayActivity extends AppCompatActivity {
 
         //Getting Image Name
         mImageName = getIntent().getExtras().getString("imageName");
+        String saloonUID = getIntent().getExtras().getString("saloonUID");
 
         //firebase storage connection
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference storageReference = storageRef.child("saloon_image/" + PendingSaloonDetailActivity.SaloonUID + "/" + mImageName);
+        StorageReference storageReference = storageRef.child("saloon_image/" + saloonUID + "/" + mImageName);
 
 
         //Display image

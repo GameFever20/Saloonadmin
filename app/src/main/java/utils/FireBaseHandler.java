@@ -207,7 +207,7 @@ public class FireBaseHandler {
 
 
 
-    public void downloadMoreSaloonList(int limit, int lastSaloonPoint, final OnSaloonListListner onSaloonListListner) {
+    public void downloadMoreSaloonList(int limit, long lastSaloonPoint, final OnSaloonListListner onSaloonListListner) {
 
         DatabaseReference myRef = mFirebaseDatabase.getReference().child("saloon");
 
@@ -492,7 +492,7 @@ public class FireBaseHandler {
 
 
     }
-    public void uploadSaloonInfo(String saloonUID, String saloonKeyValue, int value, final OnSaloonDownload onSaloonDownload) {
+    public void uploadSaloonInfo(String saloonUID, String saloonKeyValue, long value, final OnSaloonDownload onSaloonDownload) {
 
         mFirebaseDatabase.getReference().child("saloon/" + saloonUID + "/" + saloonKeyValue).setValue(value).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

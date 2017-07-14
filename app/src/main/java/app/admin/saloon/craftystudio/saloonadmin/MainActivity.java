@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity
     private void downloadingSaloonList() {
 
         //calling download saloon list
-        fireBaseHandler.downloadSaloonList(20, new FireBaseHandler.OnSaloonListListner() {
+        fireBaseHandler.downloadSaloonList(30, new FireBaseHandler.OnSaloonListListner() {
             @Override
             public void onSaloonList(ArrayList<Saloon> saloonArrayList) {
 
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity
                                                               if (!isLodingMoreSaloon) {
 
                                                                   //get last Saloon ID
-                                                                  int lastSaloonPoint = mSaloonArraylist.get(mSaloonArraylist.size() - 1).getSaloonPoint();
+                                                                  long lastSaloonPoint = mSaloonArraylist.get(mSaloonArraylist.size() - 1).getSaloonPoint();
                                                                   onScrolledSaloonListToBottom(lastSaloonPoint);
                                                                   //  Toast.makeText(MainActivity.this, "Refreshing", Toast.LENGTH_SHORT).show();
 
@@ -273,12 +273,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void onScrolledSaloonListToBottom(int lastSaloonPoint) {
+    public void onScrolledSaloonListToBottom(long lastSaloonPoint) {
 
         isLodingMoreSaloon = true;
         Toast.makeText(MainActivity.this, "On Data calling ..", Toast.LENGTH_SHORT).show();
 
-        fireBaseHandler.downloadMoreSaloonList(20, lastSaloonPoint, new FireBaseHandler.OnSaloonListListner() {
+        fireBaseHandler.downloadMoreSaloonList(30, lastSaloonPoint, new FireBaseHandler.OnSaloonListListner() {
             @Override
             public void onSaloonList(ArrayList<Saloon> saloonArrayList) {
 

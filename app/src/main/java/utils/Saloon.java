@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Saloon implements Serializable {
 
-    private int saloonPoint;
+    private long saloonPoint;
     private String saloonLocation;
     private int saloonRating;
     private String saloonName;
@@ -26,8 +26,14 @@ public class Saloon implements Serializable {
 
     private Map<String, String> saloonImageList;
 
+    private int saloonRatingSum, saloonTotalRating;
+
+
     //timing
     private int openingTimeHour, openingTimeMinute, closingTimeHour, closingTimeMinute;
+
+    private String saloonCity ;
+    private int saloonCityIndex ;
 
 
     public boolean isSaloonHirePhotographer() {
@@ -51,11 +57,11 @@ public class Saloon implements Serializable {
 
     }
 
-    public int getSaloonPoint() {
+    public long getSaloonPoint() {
         return saloonPoint;
     }
 
-    public void setSaloonPoint(int saloonPoint) {
+    public void setSaloonPoint(long saloonPoint) {
         this.saloonPoint = saloonPoint;
     }
 
@@ -172,4 +178,114 @@ public class Saloon implements Serializable {
     public void setSaloonEmailID(String saloonEmailID) {
         this.saloonEmailID = saloonEmailID;
     }
+
+    public String getSaloonCity() {
+        return saloonCity;
+    }
+
+    public void setSaloonCity(String saloonCity) {
+        this.saloonCity = saloonCity;
+    }
+
+    public int getSaloonCityIndex() {
+        return saloonCityIndex;
+    }
+
+    public void setSaloonCityIndex(int saloonCityIndex) {
+        this.saloonCityIndex = saloonCityIndex;
+    }
+
+
+    public int getSaloonRatingSum() {
+        return saloonRatingSum;
+    }
+
+    public void setSaloonRatingSum(int saloonRatingSum) {
+        this.saloonRatingSum = saloonRatingSum;
+    }
+
+    public int getSaloonTotalRating() {
+        return saloonTotalRating;
+    }
+
+    public void setSaloonTotalRating(int saloonTotalRating) {
+        this.saloonTotalRating = saloonTotalRating;
+    }
+
+
+
+    public String resolveSaloonRating() {
+        if (saloonTotalRating > 0) {
+            return String.valueOf(saloonRatingSum / (saloonTotalRating / 5));
+        } else {
+            return "0";
+        }
+    }
+
+    public String resolveSaloonOpeningTime() {
+        String string = "";
+
+        if (openingTimeHour < 10) {
+            string = string.concat("0" + String.valueOf(openingTimeHour) + ":");
+        } else if (openingTimeHour > 12) {
+            //  string = string.concat(String.valueOf(openingTimeHour) + ":");
+            string = string.concat((openingTimeHour - 12) + ":");
+        } else {
+            string = string.concat(String.valueOf(openingTimeHour) + ":");
+
+        }
+
+        if (openingTimeMinute < 10) {
+            string = string.concat("0" + String.valueOf(openingTimeMinute));
+        } else {
+            string = string.concat(String.valueOf(openingTimeMinute));
+        }
+
+
+        if (openingTimeHour > 11) {
+            string = string.concat("PM");
+        } else {
+            string = string.concat("AM");
+        }
+
+
+        return string;
+
+    }
+
+    public String resolveSaloonClosingTime() {
+        String string = "";
+        int closingtimetemp;
+        if (closingTimeHour > 12) {
+            closingtimetemp = closingTimeHour - 12;
+        } else {
+            closingtimetemp = closingTimeHour;
+        }
+
+        if (closingtimetemp < 10) {
+            string = string.concat("0" + String.valueOf(closingtimetemp) + ":");
+        } else if (closingtimetemp > 12) {
+            string = string.concat((closingTimeHour - 12) + ":");
+        } else {
+            string = string.concat(String.valueOf(closingTimeHour) + ":");
+
+        }
+
+        if (closingTimeMinute < 10) {
+            string = string.concat("0" + String.valueOf(closingTimeMinute));
+        } else {
+            string = string.concat(String.valueOf(closingTimeMinute));
+        }
+
+        if (this.closingTimeHour > 11) {
+            string = string.concat("PM");
+        } else {
+            string = string.concat("AM");
+
+        }
+
+        return string;
+
+    }
+
 }

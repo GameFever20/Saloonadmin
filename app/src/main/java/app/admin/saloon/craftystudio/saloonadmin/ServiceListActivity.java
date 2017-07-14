@@ -58,7 +58,7 @@ public class ServiceListActivity extends AppCompatActivity {
 
 
         //getting saloonUID
-        saloonUID=PendingSaloonDetailActivity.SaloonUID;
+        saloonUID=getIntent().getStringExtra("saloonUID");
 
 
         //Intializing adapter and recycler
