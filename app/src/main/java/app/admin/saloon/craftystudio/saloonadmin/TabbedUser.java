@@ -64,9 +64,9 @@ public class TabbedUser extends Fragment {
 
             mUserAgeTextView.setText(user.getUserAge()+"");
 
-            if (FullDetailActivity.ORDER.getOrderStatus() >1){
+
                 mUserPhoneNumberTextView.setText(user.getUserPhoneNumber());
-            }
+
 
 
 

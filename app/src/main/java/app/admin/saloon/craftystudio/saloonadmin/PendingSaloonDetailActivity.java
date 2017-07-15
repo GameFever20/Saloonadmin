@@ -41,7 +41,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
     int max = 60;
 
     Random random;
-    long randomvalue;
+    int randomvalue;
     String o, c;
 
     public FireBaseHandler fireBaseHandler;
@@ -287,7 +287,7 @@ public class PendingSaloonDetailActivity extends AppCompatActivity {
     public void acceptPendingSaloon(View view) {
 
         randomvalue = random.nextInt(max - min + 1) + min;
-        randomvalue =randomvalue + (saloon.getSaloonCityIndex()*1000000l);
+        randomvalue =randomvalue + (saloon.getSaloonCityIndex()*1000000);
         Log.d("Random value : ", randomvalue + "");
         Log.d("Saloon UID", SaloonUID + "");
 
